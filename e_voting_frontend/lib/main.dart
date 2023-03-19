@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:e_voting_frontend/page/login.dart';
+import 'package:e_voting_frontend/page/login/login.dart';
 
 void main() {
   runApp(const MyApp());

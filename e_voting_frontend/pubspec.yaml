@@ -38,6 +38,7 @@ dependencies:
   flutter_login: ^4.1.1
   modal_progress_hud_nsn: ^0.3.0
   easy_sidemenu: ^0.4.1+1
+  side_navigation: ^1.0.4
 
 dev_dependencies:
   flutter_test:

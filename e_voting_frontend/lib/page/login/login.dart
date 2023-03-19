@@ -1,11 +1,7 @@
+import 'package:e_voting_frontend/page/homepage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 // import 'dashboard_screen.dart';
-
-const users = const {
-  'dribbble@gmail.com': '12345',
-  'hunter@gmail.com': 'hunter',
-};
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -15,12 +11,6 @@ class LoginPage extends StatelessWidget {
   Future<String?> _authUser(LoginData data) {
     debugPrint('Name: ${data.name}, Password: ${data.password}');
     return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
-      }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
-      }
       return null;
     });
   }
@@ -35,9 +25,6 @@ class LoginPage extends StatelessWidget {
   Future<String?> _recoverPassword(String name) {
     debugPrint('Name: $name');
     return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'User not exists';
-      }
       return null;
     });
   }
@@ -48,11 +35,11 @@ class LoginPage extends StatelessWidget {
       title: 'ECORP',
       onLogin: _authUser,
       onSignup: _signupUser,
-      // onSubmitAnimationCompleted: () {
-      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //     builder: (context) => DashboardScreen(),
-      //   ));
-      // },
+      onSubmitAnimationCompleted: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+        return const HomePage(title: "");
+      }));
+      },
       onRecoverPassword: _recoverPassword,
     );
   }
