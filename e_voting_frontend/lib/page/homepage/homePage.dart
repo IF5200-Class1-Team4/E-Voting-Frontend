@@ -54,6 +54,14 @@ class _HomePageState extends State<HomePage> {
             },
           ),
 
+          const VerticalDivider(
+            width: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 0,
+            color: Colors.grey,
+          ),
+
           /// Make it take the rest of the available width
           Expanded(child: Row(),),
         ]

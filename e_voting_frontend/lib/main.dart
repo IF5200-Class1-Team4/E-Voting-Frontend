@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:e_voting_frontend/page/login/login.dart';
+import 'package:e_voting_frontend/page/homepage/homePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      // home: const LoginPage(),
+        home: const HomePage(title: "")
     );
   }
 }
