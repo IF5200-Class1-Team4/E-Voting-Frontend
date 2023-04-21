@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      // home: const LoginPage(),
-        home: const HomePage(title: "")
+      home: const LoginPage(),
+        // home: const HomePage(title: "")
     );
   }
 }
