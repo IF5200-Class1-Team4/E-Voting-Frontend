@@ -1,16 +1,16 @@
-import 'package:e_voting_frontend/candidate/candidate.dart';
+import 'package:e_voting_frontend/voting/candidate.dart';
 import 'package:flutter/material.dart';
 
-class CandidateList extends StatefulWidget {
+class VoteSubPage extends StatefulWidget {
   final List<Candidate>? candidateList;
   final void Function(Candidate)? callback;
-  const CandidateList({Key? key, this.candidateList, this.callback}) : super(key: key);
+  const VoteSubPage({Key? key, this.candidateList, this.callback}) : super(key: key);
 
   @override
-  State<CandidateList> createState() => _CandidateListState();
+  State<VoteSubPage> createState() => _VoteSubPageState();
 }
 
-class _CandidateListState extends State<CandidateList> {
+class _VoteSubPageState extends State<VoteSubPage> {
 
   @override
   Widget build(BuildContext context) {
