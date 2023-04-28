@@ -1,4 +1,6 @@
 import 'package:e_voting_frontend/page/homepage/sideMenuList.dart';
+import 'package:e_voting_frontend/voting/event.dart';
+import 'package:e_voting_frontend/page/homepage/voteSubPage.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:side_navigation/side_navigation.dart';
@@ -16,6 +18,27 @@ class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   SideMenuController page = SideMenuController();
   late final SideMenuList itemList;
+  String jsonString = "{\"startDate\":\"April\",\"endDate\":\"April\",\"candidateList\":[{\"name\":\"A\",\"party\":\"B\",\"id\":1},{\"name\":\"A2\",\"party\":\"B\",\"id\":2}]}";
+  late VotingEvent event;
+
+  _HomePageState(){
+    event = VotingEvent.fromJsonString(jsonString);
+  }
+
+  // void parser(){
+  //   String jsonString = "{\"startDate\":\"April\",\"endDate\":\"April\",\"candidateList\":[{\"name\":\"A\",\"party\":\"B\",\"id\":1},{\"name\":\"A2\",\"party\":\"B\",\"id\":2}]}";
+  //   event = VotingEvent.fromJsonString(jsonString);
+  //   if(event != null){
+  //     print(event?.startDate);
+  //     print(event?.endDate);
+  //     print(event?.candidateList[0].id);
+  //     print(event?.candidateList[0].name);
+  //     print(event?.candidateList[0].party);
+  //     print(event?.candidateList[1].id);
+  //     print(event?.candidateList[1].name);
+  //     print(event?.candidateList[1].party); 
+  //   }
+  // }
 
 
   @override
@@ -63,9 +86,11 @@ class _HomePageState extends State<HomePage> {
           ),
 
           /// Make it take the rest of the available width
-          Expanded(child: Row(),),
+          Expanded(child: VoteSubPage(event: event)
+          ),
         ]
-      )
+      ),
+      // floatingActionButton: FloatingActionButton(onPressed: parser),
       );
   }
 }

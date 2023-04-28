@@ -1,10 +1,11 @@
 import 'package:e_voting_frontend/voting/candidate.dart';
+import 'package:e_voting_frontend/voting/event.dart';
 import 'package:flutter/material.dart';
 
 class VoteSubPage extends StatefulWidget {
-  final List<Candidate>? candidateList;
+  final VotingEvent event;
   final void Function(Candidate)? callback;
-  const VoteSubPage({Key? key, this.candidateList, this.callback}) : super(key: key);
+  const VoteSubPage({Key? key, required this.event, this.callback}) : super(key: key);
 
   @override
   State<VoteSubPage> createState() => _VoteSubPageState();
@@ -14,9 +15,7 @@ class _VoteSubPageState extends State<VoteSubPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CandidateListBuilder(candidateList: widget.candidateList, callback: widget.callback),
-    );
+    return CandidateListBuilder(candidateList: widget.event.candidateList, callback: widget.callback);
   }
 }
 
@@ -40,7 +39,6 @@ class _CandidateListBuilderState extends State<CandidateListBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    // candidateList.add(bleDevice1);
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemCount: widget.candidateList!.length,
