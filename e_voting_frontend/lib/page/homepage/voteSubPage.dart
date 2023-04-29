@@ -15,7 +15,36 @@ class _VoteSubPageState extends State<VoteSubPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CandidateListBuilder(candidateList: widget.event.candidateList, callback: widget.callback);
+    return Column(
+      children: [
+        const Padding(padding: EdgeInsets.all(20.0),),
+        Align(
+            alignment: Alignment.topLeft,
+            child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
+              const Icon(Icons.calendar_month),
+              const Text('Start Date :'),
+              Text(widget.event.startDate),
+              const Padding(padding: EdgeInsets.all(20.0),),
+            ],
+          ),
+        ),
+        Align(
+            alignment: Alignment.topLeft,
+            child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
+              const Icon(Icons.calendar_month),
+              const Text('End Date :'),
+              Text(widget.event.endDate),
+              const Padding(padding: EdgeInsets.all(20.0),),
+            ],
+          ),
+        ),
+        Expanded(child: CandidateListBuilder(candidateList: widget.event.candidateList, callback: widget.callback)),
+      ],
+    );
   }
 }
 
@@ -40,6 +69,8 @@ class _CandidateListBuilderState extends State<CandidateListBuilder> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       padding: const EdgeInsets.all(16.0),
       itemCount: widget.candidateList!.length,
       itemBuilder: ((context, index) {
