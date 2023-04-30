@@ -17,9 +17,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   SideMenuController page = SideMenuController();
-  late final SideMenuList itemList;
   String jsonString = "{\"startDate\":\"April\",\"endDate\":\"April\",\"candidateList\":[{\"name\":\"A\",\"party\":\"B\",\"id\":1},{\"name\":\"A2\",\"party\":\"B\",\"id\":2}]}";
   late VotingEvent event;
+
+    late List<Widget> views = [
+    Center(
+      child: VoteSubPage(event: event),
+    ),
+    const Center(
+      child: Text('Account'),
+    ),
+    const Center(
+      child: Text('Settings'),
+    ),
+  ];
 
   _HomePageState(){
     event = VotingEvent.fromJsonString(jsonString);
@@ -40,10 +51,18 @@ class _HomePageState extends State<HomePage> {
   //   }
   // }
 
+  Widget PageSelector(){
+    switch (selectedIndex) {
+      case 0:
+        return VoteSubPage(event: event);
+      default:
+        return Row(children: [],);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    itemList  = SideMenuList(page);
     return Scaffold(
       /// You can use an AppBar if you want to
       //appBar: AppBar(
@@ -86,8 +105,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           /// Make it take the rest of the available width
-          Expanded(child: VoteSubPage(event: event)
-          ),
+          Expanded(child: PageSelector()),
         ]
       ),
       // floatingActionButton: FloatingActionButton(onPressed: parser),

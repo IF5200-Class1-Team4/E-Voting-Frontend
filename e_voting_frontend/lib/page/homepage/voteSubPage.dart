@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 class VoteSubPage extends StatefulWidget {
   final VotingEvent event;
-  final void Function(Candidate)? callback;
-  const VoteSubPage({Key? key, required this.event, this.callback}) : super(key: key);
+  const VoteSubPage({Key? key, required this.event}) : super(key: key);
 
   @override
   State<VoteSubPage> createState() => _VoteSubPageState();
@@ -42,7 +41,7 @@ class _VoteSubPageState extends State<VoteSubPage> {
             ],
           ),
         ),
-        Expanded(child: CandidateListBuilder(candidateList: widget.event.candidateList, callback: widget.callback)),
+        Expanded(child: CandidateListBuilder(candidateList: widget.event.candidateList)),
       ],
     );
   }
@@ -50,8 +49,7 @@ class _VoteSubPageState extends State<VoteSubPage> {
 
 class CandidateListBuilder extends StatefulWidget {
   final List<Candidate>? candidateList;
-  final void Function(Candidate)? callback;
-  const CandidateListBuilder({Key? key, this.candidateList, this.callback}) : super(key: key);
+  const CandidateListBuilder({Key? key, this.candidateList}) : super(key: key);
 
   @override
   State<CandidateListBuilder> createState() => _CandidateListBuilderState();
@@ -61,9 +59,6 @@ class _CandidateListBuilderState extends State<CandidateListBuilder> {
 
   void onCardClicked(Candidate candidate){
     print(candidate.id);
-    if(widget.callback != null){
-      widget.callback!(candidate);
-    }
   }
 
   @override
