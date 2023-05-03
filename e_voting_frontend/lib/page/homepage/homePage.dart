@@ -1,4 +1,6 @@
+import 'package:e_voting_frontend/page/homepage/profileSubPage.dart';
 import 'package:e_voting_frontend/page/homepage/sideMenuList.dart';
+import 'package:e_voting_frontend/user_role/accountProfile.dart';
 import 'package:e_voting_frontend/voting/event.dart';
 import 'package:e_voting_frontend/page/homepage/voteSubPage.dart';
 import 'package:flutter/material.dart';
@@ -15,25 +17,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   SideMenuController page = SideMenuController();
-  String jsonString = "{\"startDate\":\"April\",\"endDate\":\"April\",\"candidateList\":[{\"name\":\"A\",\"party\":\"B\",\"id\":1},{\"name\":\"A2\",\"party\":\"B\",\"id\":2}]}";
+  String eventJsonString = "{\"startDate\":\"Tue, 2 May 2023\",\"endDate\":\"Fri, 5 May 2023\",\"candidateList\":[{\"name\":\"Budi Prakoso\",\"party\":\"Partai Pertanian Sejahtera\",\"id\":1},{\"name\":\"Abdul Archam\",\"party\":\"Partai Perminyakan\",\"id\":2}]}";
+  String profileJsonString = "{\"name\":\"Budi\",\"dateOfBirth\":\"Fri, 5 May 2023\",\"gender\":\"male\",\"id\":1234}";
   late VotingEvent event;
+  late AccountProfile profile;
 
-    late List<Widget> views = [
-    Center(
-      child: VoteSubPage(event: event),
-    ),
+  late List<Widget> views = [
+    ProfileSubPage(profile: profile),
+    VoteSubPage(event: event),
     const Center(
-      child: Text('Account'),
-    ),
-    const Center(
-      child: Text('Settings'),
+      child: Text('Progress'),
     ),
   ];
 
   _HomePageState(){
-    event = VotingEvent.fromJsonString(jsonString);
+    event = VotingEvent.fromJsonString(eventJsonString);
+    profile = AccountProfile.fromJsonString(profileJsonString);
   }
 
   // void parser(){
@@ -54,7 +55,13 @@ class _HomePageState extends State<HomePage> {
   Widget PageSelector(){
     switch (selectedIndex) {
       case 0:
+        return ProfileSubPage(profile: profile);
+      case 1:
         return VoteSubPage(event: event);
+      case 2:
+        return const Center(
+          child: Text('Progress'),
+        );
       default:
         return Row(children: [],);
     }
@@ -77,16 +84,16 @@ class _HomePageState extends State<HomePage> {
             selectedIndex: selectedIndex,
             items: const [
               SideNavigationBarItem(
-                icon: Icons.dashboard,
-                label: 'Dashboard',
-              ),
-              SideNavigationBarItem(
                 icon: Icons.person,
                 label: 'Account',
               ),
               SideNavigationBarItem(
-                icon: Icons.settings,
-                label: 'Settings',
+                icon: Icons.how_to_vote,
+                label: 'Vote',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.auto_graph,
+                label: 'Progression',
               ),
             ],
             onTap: (index) {
