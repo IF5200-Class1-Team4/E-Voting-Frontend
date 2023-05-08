@@ -22,6 +22,19 @@ class _VoteSubPageState extends State<VoteSubPage> {
             child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.start,
             children: [
+              const Icon(Icons.how_to_vote),
+              const Text('Election :'),
+              Text(widget.event.name),
+              const Padding(padding: EdgeInsets.all(20.0),),
+            ],
+          ),
+        ),
+
+        Align(
+            alignment: Alignment.topLeft,
+            child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
               const Icon(Icons.calendar_month),
               const Text('Start Date :'),
               Text(widget.event.startDate),
@@ -59,6 +72,7 @@ class _CandidateListBuilderState extends State<CandidateListBuilder> {
 
   void onCardClicked(Candidate candidate){
     print(candidate.id);
+    //PostSelectedCandidate
   }
 
   @override
@@ -72,6 +86,7 @@ class _CandidateListBuilderState extends State<CandidateListBuilder> {
         return Card(
           clipBehavior: Clip.antiAlias,
           child: ListTile(
+                tileColor: Color.fromARGB(255, 181, 210, 224),
                 title: Text(widget.candidateList![index].name),
                 subtitle: Text( widget.candidateList![index].party),
                 onTap: (() =>  onCardClicked(widget.candidateList![index])),
