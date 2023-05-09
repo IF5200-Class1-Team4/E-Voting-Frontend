@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
+  // bool isLoginAsAdmin = false;
   SideMenuController page = SideMenuController();
   String eventJsonString = "{\"startDate\":\"Tue, 2 May 2023\",\"endDate\":\"Fri, 5 May 2023\",\"name\":\"Pemilu Raya\",\"id\":123,\"candidateList\":[{\"name\":\"Budi Prakoso\",\"party\":\"Partai Pertanian Sejahtera\",\"id\":1,\"votes\":100},{\"name\":\"Abdul Archam\",\"party\":\"Partai Perminyakan\",\"id\":2,\"votes\":120}]}";
   String profileJsonString = "{\"name\":\"Budi\",\"dateOfBirth\":\"Fri, 5 May 2023\",\"gender\":\"male\",\"id\":1234}";
@@ -55,16 +56,59 @@ class _HomePageState extends State<HomePage> {
   // }
 
   Widget PageSelector(){
-    switch (selectedIndex) {
-      case 0:
-        return ProfileSubPage(profile: widget.profile);
-      case 1:
-        return VoteSubPage(event: event!);
-        // return electionSettingPage();
-      case 2:
-        return ProgressionSubPage(event: event!);
-      default:
-        return Row(children: [],);
+    if(widget.profile.role == "voter"){
+        switch (selectedIndex) {
+        case 0:
+          return ProfileSubPage(profile: widget.profile);
+        case 1:
+          return VoteSubPage(event: event!);
+          // return electionSettingPage();
+        case 2:
+          return ProgressionSubPage(event: event!);
+        default:
+          return Row(children: [],);
+      }
+    }
+    else{
+        switch (selectedIndex) {
+        case 0:
+          return ProfileSubPage(profile: widget.profile);
+        case 1:
+          return electionSettingPage();
+        default:
+          return Row(children: [],);
+      }
+    }
+  }
+
+  List<SideNavigationBarItem> navBarSelector(){
+    if(widget.profile.role == "voter"){
+      return const [
+              SideNavigationBarItem(
+                icon: Icons.person,
+                label: 'Account',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.how_to_vote,
+                label: 'Vote',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.auto_graph,
+                label: 'Progression',
+              ),
+            ];
+    }
+    else{
+      return const [
+              SideNavigationBarItem(
+                icon: Icons.person,
+                label: 'Account',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.how_to_vote,
+                label: 'Vote setting',
+              )
+            ];
     }
   }
 
@@ -83,20 +127,7 @@ class _HomePageState extends State<HomePage> {
           /// Pretty similar to the BottomNavigationBar!
           SideNavigationBar(
             selectedIndex: selectedIndex,
-            items: const [
-              SideNavigationBarItem(
-                icon: Icons.person,
-                label: 'Account',
-              ),
-              SideNavigationBarItem(
-                icon: Icons.how_to_vote,
-                label: 'Vote',
-              ),
-              SideNavigationBarItem(
-                icon: Icons.auto_graph,
-                label: 'Progression',
-              ),
-            ],
+            items: navBarSelector(),
             onTap: (index) async{
               if(index != 0){
                 event = await http.GetEventSync(1);
