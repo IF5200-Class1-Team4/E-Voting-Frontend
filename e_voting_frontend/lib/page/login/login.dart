@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Future<String?> _signupUser(SignupData data) {
-    debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
+    debugPrint('Signup Name: ${data.name}, Password: ${data.password}, data1: ${data.additionalSignupData.toString()}');
     return Future.delayed(loginTime).then((_) {
       return null;
     });
@@ -35,6 +35,14 @@ class LoginPage extends StatelessWidget {
       title: 'ECORP',
       onLogin: _authUser,
       onSignup: _signupUser,
+      additionalSignupFields: const[
+                                UserFormField(keyName: "name",
+                                displayName: "Nama"),
+                                UserFormField(keyName: "id",
+                                displayName: "NIK"),
+                                UserFormField(keyName: "dateOfBirth",
+                                displayName: "Tanggal Lahir"),
+                              ],
       onSubmitAnimationCompleted: () {
         Navigator.push(context, MaterialPageRoute(builder: (context){
         return const HomePage(title: "");
