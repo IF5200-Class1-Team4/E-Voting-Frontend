@@ -1,5 +1,6 @@
 import 'package:e_voting_frontend/page/homepage/profileSubPage.dart';
 import 'package:e_voting_frontend/page/homepage/progressionSubPage.dart';
+import 'package:e_voting_frontend/page/homepage/settingSubPage.dart';
 import 'package:e_voting_frontend/page/homepage/sideMenuList.dart';
 import 'package:e_voting_frontend/user_role/accountProfile.dart';
 import 'package:e_voting_frontend/voting/event.dart';
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedIndex = 1;
+  int selectedIndex = 0;
   SideMenuController page = SideMenuController();
   String eventJsonString = "{\"startDate\":\"Tue, 2 May 2023\",\"endDate\":\"Fri, 5 May 2023\",\"name\":\"Pemilu Raya\",\"id\":123,\"candidateList\":[{\"name\":\"Budi Prakoso\",\"party\":\"Partai Pertanian Sejahtera\",\"id\":1,\"votes\":100},{\"name\":\"Abdul Archam\",\"party\":\"Partai Perminyakan\",\"id\":2,\"votes\":120}]}";
   String profileJsonString = "{\"name\":\"Budi\",\"dateOfBirth\":\"Fri, 5 May 2023\",\"gender\":\"male\",\"id\":1234}";
@@ -58,9 +59,10 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return ProfileSubPage(profile: profile);
       case 1:
-        return VoteSubPage(event: event);
-      case 2:
-        return ProgressionSubPage(event: event);
+        // return VoteSubPage(event: event);
+        return electionSettingPage();
+      // case 2:
+      //   return ProgressionSubPage(event: event);
       default:
         return Row(children: [],);
     }
