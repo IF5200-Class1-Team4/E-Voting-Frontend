@@ -10,9 +10,8 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:side_navigation/side_navigation.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  final AccountProfile profile;
+  const HomePage({super.key, required this.profile});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   late AccountProfile profile;
 
   late List<Widget> views = [
-    ProfileSubPage(profile: profile),
+    ProfileSubPage(profile: widget.profile),
     VoteSubPage(event: event),
     const Center(
       child: Text('Progress'),
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   _HomePageState(){
     event = VotingEvent.fromJsonString(eventJsonString);
-    profile = AccountProfile.fromJsonString(profileJsonString);
+    // profile = widget.profile;
   }
 
   // void parser(){
@@ -57,7 +56,7 @@ class _HomePageState extends State<HomePage> {
   Widget PageSelector(){
     switch (selectedIndex) {
       case 0:
-        return ProfileSubPage(profile: profile);
+        return ProfileSubPage(profile: widget.profile);
       case 1:
         // return VoteSubPage(event: event);
         return electionSettingPage();

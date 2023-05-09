@@ -1,4 +1,5 @@
 import 'package:e_voting_frontend/page/homepage/homePage.dart';
+import 'package:e_voting_frontend/user_role/accountProfile.dart';
 import 'package:e_voting_frontend/utility/httpCommunication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -17,9 +18,7 @@ class LoginPage extends StatelessWidget {
 
   Future<String?> _signupUser(SignupData data) {
     debugPrint('Signup Name: ${data.name}, Password: ${data.password}, data1: ${data.additionalSignupData.toString()}');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
+    return http.PostRegisterSync(data.name!, data.password!, data.additionalSignupData!);
   }
 
   Future<String?> _recoverPassword(String name) {
@@ -42,10 +41,15 @@ class LoginPage extends StatelessWidget {
                                 displayName: "NIK"),
                                 UserFormField(keyName: "dateOfBirth",
                                 displayName: "Tanggal Lahir"),
+                                UserFormField(keyName: "gender",
+                                displayName: "Gender"),
                               ],
       onSubmitAnimationCompleted: () {
+        AccountProfile profile = http.GetProfile();
+        // print(profile.name);
+        // print(profile.id);
         Navigator.push(context, MaterialPageRoute(builder: (context){
-            return const HomePage(title: "");
+            return HomePage(profile: profile);
           })); 
       },
       onRecoverPassword: _recoverPassword,
