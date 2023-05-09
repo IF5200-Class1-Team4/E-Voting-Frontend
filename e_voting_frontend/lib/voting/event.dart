@@ -12,11 +12,11 @@ class VotingEvent {
   factory VotingEvent.fromJsonString(String source) {
     var data = json.decode(source);
     print(data);
-    final start = data['startDate'] as String;
-    final end = data['endDate'] as String;
+    final start = data['startDate'].toString();
+    final end = data['endDate'].toString();
     final name = data['name'] as String;
     final id = data['id'] as int;
-    var dataList = data['candidateList'] as List;
+    var dataList = data['candidates'] as List;
     List<Candidate> list = dataList.map<Candidate>((json) => Candidate.fromJson(json)).toList();
     return VotingEvent(start, end, name, id, list);
   }

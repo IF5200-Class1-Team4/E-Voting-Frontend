@@ -3,6 +3,7 @@ import 'package:e_voting_frontend/page/homepage/progressionSubPage.dart';
 import 'package:e_voting_frontend/page/homepage/settingSubPage.dart';
 import 'package:e_voting_frontend/page/homepage/sideMenuList.dart';
 import 'package:e_voting_frontend/user_role/accountProfile.dart';
+import 'package:e_voting_frontend/utility/httpCommunication.dart';
 import 'package:e_voting_frontend/voting/event.dart';
 import 'package:e_voting_frontend/page/homepage/voteSubPage.dart';
 import 'package:flutter/material.dart';
@@ -22,19 +23,19 @@ class _HomePageState extends State<HomePage> {
   SideMenuController page = SideMenuController();
   String eventJsonString = "{\"startDate\":\"Tue, 2 May 2023\",\"endDate\":\"Fri, 5 May 2023\",\"name\":\"Pemilu Raya\",\"id\":123,\"candidateList\":[{\"name\":\"Budi Prakoso\",\"party\":\"Partai Pertanian Sejahtera\",\"id\":1,\"votes\":100},{\"name\":\"Abdul Archam\",\"party\":\"Partai Perminyakan\",\"id\":2,\"votes\":120}]}";
   String profileJsonString = "{\"name\":\"Budi\",\"dateOfBirth\":\"Fri, 5 May 2023\",\"gender\":\"male\",\"id\":1234}";
-  late VotingEvent event;
-  late AccountProfile profile;
+  VotingEvent? event;
+  HttpCommunication http = HttpCommunication();
 
-  late List<Widget> views = [
-    ProfileSubPage(profile: widget.profile),
-    VoteSubPage(event: event),
-    const Center(
-      child: Text('Progress'),
-    ),
-  ];
+  // late List<Widget> views = [
+  //   ProfileSubPage(profile: widget.profile),
+  //   VoteSubPage(event: event),
+  //   const Center(
+  //     child: Text('Progress'),
+  //   ),
+  // ];
 
   _HomePageState(){
-    event = VotingEvent.fromJsonString(eventJsonString);
+    // event = VotingEvent.fromJsonString(eventJsonString);
     // profile = widget.profile;
   }
 
@@ -58,10 +59,10 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return ProfileSubPage(profile: widget.profile);
       case 1:
-        // return VoteSubPage(event: event);
-        return electionSettingPage();
-      // case 2:
-      //   return ProgressionSubPage(event: event);
+        return VoteSubPage(event: event!);
+        // return electionSettingPage();
+      case 2:
+        return ProgressionSubPage(event: event!);
       default:
         return Row(children: [],);
     }
@@ -96,10 +97,20 @@ class _HomePageState extends State<HomePage> {
                 label: 'Progression',
               ),
             ],
-            onTap: (index) {
-              setState(() {
-                selectedIndex = index;
-              });
+            onTap: (index) async{
+              if(index != 0){
+                event = await http.GetEventSync(1);
+                if(event!=null){
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                }
+              }
+              else{
+                setState(() {
+                  selectedIndex = index;
+                });
+              }
             },
           ),
 
