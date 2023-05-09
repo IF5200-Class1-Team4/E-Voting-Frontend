@@ -111,15 +111,40 @@ class HttpCommunication {
 
       VotingEvent event = VotingEvent.fromJsonString(response.body);
       return event; 
-      
+
     } catch (e) {
       print("error ${e.toString()}");
       return null;
     }
   }
 
-  //PostSelectedCandidate
-  //GetVotingEvent
-  //GetVotingProgression
+  Future<VotingEvent?> PostVoteSync(int eventId, int candidateId) async{
+    var url = Uri.parse("http://64.226.77.59:8000/dummy/event/$eventId/vote/$candidateId");
+    // var url = Uri.http("64.226.77.59:8000","dummy/login");
+    // var url = Uri.https("google.com");
+
+    Map<String, String> headers= {};
+    headers["apikey"] = apiKey;
+    headers["Authorization"] = "Bearer $accessToken";
+
+    try {
+      var response = await http.post(url, headers: headers);
+      print("response header ${response.headers.toString()}");
+      print("response body ${response.body.toString()}");
+      print("request header ${headers.toString()}");
+      if(response.statusCode != HttpStatus.ok){
+        print("error code ${response.statusCode.toString()}");
+        return null;
+      }
+
+      VotingEvent event = VotingEvent.fromJsonString(response.body);
+      print("vote success");
+      return event; 
+      
+    } catch (e) {
+      print("error ${e.toString()}");
+      return null;
+    }
+  }
   
 }

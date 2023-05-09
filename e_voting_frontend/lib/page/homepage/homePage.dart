@@ -34,10 +34,10 @@ class _HomePageState extends State<HomePage> {
   //   ),
   // ];
 
-  _HomePageState(){
-    // event = VotingEvent.fromJsonString(eventJsonString);
-    // profile = widget.profile;
-  }
+  // _HomePageState(){
+  //   // event = VotingEvent.fromJsonString(eventJsonString);
+  //   // profile = widget.profile;
+  // }
 
   // void parser(){
   //   String jsonString = "{\"startDate\":\"April\",\"endDate\":\"April\",\"candidateList\":[{\"name\":\"A\",\"party\":\"B\",\"id\":1},{\"name\":\"A2\",\"party\":\"B\",\"id\":2}]}";

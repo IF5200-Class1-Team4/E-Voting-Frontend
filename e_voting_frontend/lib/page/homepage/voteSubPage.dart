@@ -1,3 +1,4 @@
+import 'package:e_voting_frontend/utility/httpCommunication.dart';
 import 'package:e_voting_frontend/voting/candidate.dart';
 import 'package:e_voting_frontend/voting/event.dart';
 import 'package:flutter/material.dart';
@@ -54,24 +55,25 @@ class _VoteSubPageState extends State<VoteSubPage> {
             ],
           ),
         ),
-        Expanded(child: CandidateListBuilder(candidateList: widget.event.candidateList)),
+        Expanded(child: CandidateListBuilder(event: widget.event)),
       ],
     );
   }
 }
 
 class CandidateListBuilder extends StatefulWidget {
-  final List<Candidate>? candidateList;
-  const CandidateListBuilder({Key? key, this.candidateList}) : super(key: key);
+  final VotingEvent event;
+  const CandidateListBuilder({Key? key, required this.event}) : super(key: key);
 
   @override
   State<CandidateListBuilder> createState() => _CandidateListBuilderState();
 }
 
 class _CandidateListBuilderState extends State<CandidateListBuilder> {
-
+  HttpCommunication http = HttpCommunication();
   void onCardClicked(Candidate candidate){
     print(candidate.id);
+    http.PostVoteSync(widget.event.id, candidate.id);
     //PostSelectedCandidate
   }
 
@@ -81,15 +83,15 @@ class _CandidateListBuilderState extends State<CandidateListBuilder> {
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       padding: const EdgeInsets.all(16.0),
-      itemCount: widget.candidateList!.length,
+      itemCount: widget.event.candidateList.length,
       itemBuilder: ((context, index) {
         return Card(
           clipBehavior: Clip.antiAlias,
           child: ListTile(
                 tileColor: Color.fromARGB(255, 181, 210, 224),
-                title: Text(widget.candidateList![index].name),
-                subtitle: Text( widget.candidateList![index].party),
-                onTap: (() =>  onCardClicked(widget.candidateList![index])),
+                title: Text(widget.event.candidateList[index].name),
+                subtitle: Text( widget.event.candidateList[index].party),
+                onTap: (() =>  onCardClicked(widget.event.candidateList[index])),
               ),
         );
         }
