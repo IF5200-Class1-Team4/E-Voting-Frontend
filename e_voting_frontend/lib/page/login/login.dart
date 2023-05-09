@@ -1,18 +1,18 @@
 import 'package:e_voting_frontend/page/homepage/homePage.dart';
+import 'package:e_voting_frontend/utility/httpCommunication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 // import 'dashboard_screen.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final HttpCommunication http = HttpCommunication();
+  LoginPage({super.key});
 
   Duration get loginTime => Duration(milliseconds: 2250);
 
-  Future<String?> _authUser(LoginData data) {
+  Future<String?> _authUser(LoginData data) async{
     debugPrint('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
+    return http.PostLoginSync(data.name, data.password);
   }
 
   Future<String?> _signupUser(SignupData data) {
@@ -45,8 +45,8 @@ class LoginPage extends StatelessWidget {
                               ],
       onSubmitAnimationCompleted: () {
         Navigator.push(context, MaterialPageRoute(builder: (context){
-        return const HomePage(title: "");
-      }));
+            return const HomePage(title: "");
+          })); 
       },
       onRecoverPassword: _recoverPassword,
     );
