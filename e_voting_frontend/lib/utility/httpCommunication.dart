@@ -146,5 +146,82 @@ class HttpCommunication {
       return null;
     }
   }
+
+  Future<VotingEvent?> PostEventSync(int startDate, int endDate, String eventName) async{
+    var url = Uri.parse("http://64.226.77.59:8000/dummy/event/");
+    // var url = Uri.http("64.226.77.59:8000","dummy/login");
+    // var url = Uri.https("google.com");
+
+    Map<String, String> headers= {};
+    headers["apikey"] = apiKey;
+    headers["Authorization"] = "Bearer $accessToken";
+    headers["Content-Type"] = "application/json";
+
+    Map<String, dynamic> body = {};
+    body["startDate"] = startDate;
+    body["endDate"] = endDate;
+    body["name"] = eventName;
+    body["candidates"] = [];
+    String bodyJson = json.encode(body);
+    
+
+    try {
+      var response = await http.post(url, headers: headers, body: bodyJson);
+      print("response header ${response.headers.toString()}");
+      print("response body ${response.body.toString()}");
+      print("request header ${headers.toString()}");
+      print("request body $bodyJson");
+      if(response.statusCode != HttpStatus.ok){
+        print("error code ${response.statusCode.toString()}");
+        return null;
+      }
+
+      VotingEvent event = VotingEvent.fromJsonString(response.body);
+      print("election register success");
+      return event; 
+      
+    } catch (e) {
+      print("error ${e.toString()}");
+      return null;
+    }
+  }
+
+  Future<VotingEvent?> PostCandidateSync(String name, String party, int eventId) async{
+    var url = Uri.parse("http://64.226.77.59:8000/dummy/event/$eventId/candidate");
+    // var url = Uri.http("64.226.77.59:8000","dummy/login");
+    // var url = Uri.https("google.com");
+
+    Map<String, String> headers= {};
+    headers["apikey"] = apiKey;
+    headers["Authorization"] = "Bearer $accessToken";
+    headers["Content-Type"] = "application/json";
+
+    Map<String, dynamic> body = {};
+    body["name"] = name;
+    body["party"] = party;
+    String bodyJson = json.encode(body);
+    
+
+    try {
+      var response = await http.post(url, headers: headers, body: bodyJson);
+      print("response header ${response.headers.toString()}");
+      print("response body ${response.body.toString()}");
+      print("request header ${headers.toString()}");
+      print("request body $bodyJson");
+      if(response.statusCode != HttpStatus.ok){
+        print("error code ${response.statusCode.toString()}");
+        return null;
+      }
+
+      VotingEvent event = VotingEvent.fromJsonString(response.body);
+      print("election register success");
+      return event; 
+      
+    } catch (e) {
+      print("error ${e.toString()}");
+      return null;
+    }
+  }
   
 }
+

@@ -75,6 +75,8 @@ class _HomePageState extends State<HomePage> {
           return ProfileSubPage(profile: widget.profile);
         case 1:
           return electionSettingPage();
+        case 2:
+          return candidateSettingPage();
         default:
           return Row(children: [],);
       }
@@ -107,6 +109,10 @@ class _HomePageState extends State<HomePage> {
               SideNavigationBarItem(
                 icon: Icons.how_to_vote,
                 label: 'Vote setting',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.group,
+                label: 'Add Candidate',
               )
             ];
     }
